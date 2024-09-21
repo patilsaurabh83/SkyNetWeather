@@ -1,0 +1,600 @@
+.weather-container {
+    position: relative;
+    width: 70%;
+    display: flex;
+    margin: 0 auto;
+    padding: 20px;
+    z-index: 1;
+    /* Ensure content is above the background image */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Center the content horizontally */
+    justify-content: center;
+    /* Center the content vertically */
+    height: 100vh;
+    /* Make sure the container takes the full viewport height */
+}
+
+.search-bar {
+    width: 90%;
+    display: flex;
+    /* Ensure items inside are aligned horizontally */
+    align-items: center;
+    /* Align items vertically centered */
+    gap: 8px;
+    /* Space between items */
+}
+
+.searchBox {
+    display: flex;
+    flex: 1;
+    /* max-width: 230px; */
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background: #2f3640;
+    border-radius: 50px;
+    position: relative;
+    z-index: 2;
+    /* Ensure the search box is above the background image */
+}
+
+.searchButton {
+    color: white;
+    position: absolute;
+    right: 8px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--gradient-2, linear-gradient(90deg, #2AF598 0%, #009EFD 100%));
+    border: 0;
+    display: inline-block;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+}
+
+/* Hover effect */
+button:hover {
+    color: #fff;
+    background-color: #1A1A1A;
+    box-shadow: rgba(0, 0, 0, 0.5) 0 10px 20px;
+    transform: translateY(-3px);
+}
+
+/* Button pressing effect */
+button:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+.searchInput {
+    border: none;
+    background: none;
+    outline: none;
+    font-family: 'Rubik', sans-serif;
+    width: 90%;
+    color: white;
+    font-size: 15px;
+    padding: 24px 46px 24px 26px;
+}
+
+.search-btn,
+.location-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+    z-index: 2;
+    /* Ensure buttons are above the background image */
+}
+
+.search-btn img,
+.location-btn img {
+    width: 24px;
+    height: 24px;
+}
+
+/* From Uiverse.io by JaydipPrajapati1910 */
+.loader {
+    width: 44.8px;
+    height: 44.8px;
+    position: relative;
+    transform: rotate(45deg);
+    z-index: 2;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.loader:before,
+.loader:after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50% 50% 0 50%;
+    background: #0000;
+    background-image: radial-gradient(circle 11.2px at 50% 50%, #0000 94%, #007cdb);
+}
+
+.loader:after {
+    animation: pulse-ytk0dhmd 1s infinite;
+    transform: perspective(336px) translateZ(0px);
+}
+
+.tooltip {
+    visibility: hidden;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    position: fixed;
+    bottom: 125%;
+    width: max-content;
+    font-family: 'Roboto', sans-serif;
+    /* top: 14px; */
+    left: -30%;
+    /* right: 51px; */
+    transform: translateX(-50%) rotate(-45deg);
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+.loader:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+@keyframes pulse-ytk0dhmd {
+    to {
+        transform: perspective(336px) translateZ(168px);
+        opacity: 0;
+    }
+}
+
+
+/* Pre Loder for the weather overlay */
+
+.loaders-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #272727;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    /* Make sure it's above everything */
+}
+
+.loaders {
+    position: relative;
+    width: 54px;
+    height: 54px;
+    border-radius: 10px;
+    z-index: 3;
+}
+
+.loaders div {
+    width: 8%;
+    height: 24%;
+    background: rgb(128, 128, 128);
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    opacity: 0;
+    border-radius: 50px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    animation: fade458 1s linear infinite;
+}
+
+@keyframes fade458 {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0.25;
+    }
+}
+
+.loaders .bar1 {
+    transform: rotate(0deg) translate(0, -130%);
+    animation-delay: 0s;
+}
+
+.loaders .bar2 {
+    transform: rotate(30deg) translate(0, -130%);
+    animation-delay: -1.1s;
+}
+
+.loaders .bar3 {
+    transform: rotate(60deg) translate(0, -130%);
+    animation-delay: -1s;
+}
+
+.loaders .bar4 {
+    transform: rotate(90deg) translate(0, -130%);
+    animation-delay: -0.9s;
+}
+
+.loaders .bar5 {
+    transform: rotate(120deg) translate(0, -130%);
+    animation-delay: -0.8s;
+}
+
+.loaders .bar6 {
+    transform: rotate(150deg) translate(0, -130%);
+    animation-delay: -0.7s;
+}
+
+.loaders .bar7 {
+    transform: rotate(180deg) translate(0, -130%);
+    animation-delay: -0.6s;
+}
+
+.loaders .bar8 {
+    transform: rotate(210deg) translate(0, -130%);
+    animation-delay: -0.5s;
+}
+
+.loaders .bar9 {
+    transform: rotate(240deg) translate(0, -130%);
+    animation-delay: -0.4s;
+}
+
+.loaders .bar10 {
+    transform: rotate(270deg) translate(0, -130%);
+    animation-delay: -0.3s;
+}
+
+.loaders .bar11 {
+    transform: rotate(300deg) translate(0, -130%);
+    animation-delay: -0.2s;
+}
+
+.loaders .bar12 {
+    transform: rotate(330deg) translate(0, -130%);
+    animation-delay: -0.1s;
+}
+
+
+
+/* Overlay container */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    flex-direction: column;
+}
+
+/* Close button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+/* Weather container */
+.weather-containers {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding-top: 15px;
+    text-align: center;
+    width: 90%;
+    max-width: 600px;
+    z-index: 3;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Location and description */
+.location-details h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+}
+
+.location-details .description {
+    font-size: 1.3rem;
+    color: gray;
+    font-weight: bold;
+    font-family: 'Rubik', sans-serif;
+}
+
+/* Main weather info */
+.main-info {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    margin-top: 15px;
+    font-family: 'Inter', sans-serif;
+}
+
+.weather-icon {
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+}
+
+.location-icon {
+    height: 60px;
+    width: 60px;
+}
+
+.location-container {
+    display: inline-flex;
+}
+
+.main-info h2 {
+    font-size: 2.5rem;
+    margin: 0;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Additional weather details */
+.additional-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    font-family: 'Rubik', sans-serif;
+    margin-top: 15px;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.detail-item p {
+    font-family: 'Rubik', sans-serif;
+    font-size: 15px;
+}
+
+.detail-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+/* Lightning map */
+.weather-map {
+    margin-top: 5px;
+    height: 250px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+
+
+/* Background Image Styles */
+.background-image {
+    position: fixed;
+    /* Fixes the position to the viewport */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    /* Ensures it is behind all other content */
+}
+
+.background-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Ensures the image covers the entire container */
+    opacity: 0.5;
+    /* Optional: Adjust the opacity if needed */
+}
+
+/* Copyright Container */
+.copyright-container {
+    position: fixed;
+    bottom: 0;
+    /* Adjust this value if you want to move it higher or lower */
+    left: 50%;
+    font-family: 'Rubik', sans-serif;
+    transform: translateX(-50%);
+    z-index: 4;
+    /* Ensure it's above other content but below overlays */
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    /* Adjust color as needed */
+    font-size: 15px;
+    /* Adjust font size as needed */
+    padding: 10px;
+    border-radius: 5px;
+    /* Optional: Add border-radius for rounded corners */
+}
+
+.rain-probability {
+    text-align: center;
+    /* Center the text */
+}
+
+.rain-details {
+    display: flex;
+    background: lightcyan;
+    justify-content: space-around;
+    font-family: 'Inter', sans-serif;
+    margin-top: 2px;
+    padding: 5px 10px;
+    border-radius: 50px;
+
+}
+
+.rain-hour {
+    flex: 1;
+    /* Allow items to grow equally */
+    text-align: center;
+    /* Center align text */
+}
+
+.droplet-icon {
+    width: 20px;
+    /* Adjust size */
+    height: auto;
+    /* Maintain aspect ratio */
+}
+
+.rain-time {
+    font-size: 12px;
+    /* Adjust font size for the time */
+    color: #555;
+    /* Change color as needed */
+}
+
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .weather-container {
+        width: 100%;
+        padding: 5px;
+    }
+
+    .search-bar {
+        width: 100%;
+        /* Full width for mobile */
+        overflow: hidden;
+        position: inherit;
+    }
+
+    .searchBox {
+        width: 100%;
+        padding: 7px;
+    }
+
+    .searchInput {
+        font-size: 14px;
+        padding: 15px 35px 15px 20px;
+        /* Adjust padding */
+    }
+
+    .searchButton {
+        width: 40px;
+        height: 40px;
+        right: 10px;
+    }
+
+    .loader {
+        height: 34.4px;
+        width: 34.4px;
+        right: 60px;
+        position: absolute;
+    }
+
+    .location-btn,
+    .search-btn {
+        margin-left: 5px;
+    }
+
+    .weather-containers {
+        width: 100%;
+        /* Full width on mobile */
+        padding: 10px;
+        height: 100%;
+        display: grid;
+    }
+
+    .location-details {
+        margin-top: 30px;
+    }
+
+    .close-btn {
+        color: #000000;
+        z-index: 50;
+        font-weight: bolder;
+    }
+
+    .location-details h1 {
+        font-size: 2rem;
+        /* Slightly smaller */
+    }
+
+    .location-details .description {
+        font-size: 1.1rem;
+        /* Adjust font size */
+    }
+
+    .main-info {
+        flex-direction: row;
+        /* Stack icon and temp vertically */
+        gap: 10px;
+        margin: 0;
+    }
+
+    .weather-icon {
+        width: 85px;
+        height: 85px;
+    }
+
+    .main-info h2 {
+        font-size: 2.5rem;
+    }
+
+    .additional-details {
+        gap: 10px;
+    }
+
+    .detail-icon {
+        width: 25px;
+        height: 25px;
+        margin-right: 5px;
+    }
+
+    .detail-item p {
+        font-size: 13px;
+        /* Slightly smaller text */
+    }
+
+    .location-icon {
+        height: 40px;
+        width: 40px;
+    }
+
+    .weather-map {
+        height: unset;
+    }
+
+    .weather-map {
+        height: unset;
+        /* Adjust height for mobile */
+        margin-top: 15px;
+    }
+
+    .copyright-container {
+        font-size: 12px;
+        padding: 5px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 416px) {
+    .rain-details {
+        margin-top: 15px;
+    }
+
+    .weather-map {
+        margin-top: 0;
+    }
+}

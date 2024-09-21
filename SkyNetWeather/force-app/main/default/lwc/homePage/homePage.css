@@ -1,0 +1,659 @@
+/* General Styles */
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #2e2e2e;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #2e2e2e;
+    /* Semi-transparent background */
+    backdrop-filter: blur(5px);
+    /* Apply backdrop filter */
+    -webkit-backdrop-filter: blur(5px);
+    /* For Safari */
+    color: white;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+}
+
+.navbar-logo {
+    width: 40px;
+    /* Adjust size as needed */
+    height: auto;
+    margin-right: 10px;
+}
+
+.navbar h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-family: 'Roboto', sans-serif;
+}
+
+.navbar-links {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-links li {
+    margin: 0 10px;
+}
+
+.navbar-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    font-family: 'Rubik', sans-serif;
+}
+
+.navbar-links a:hover {
+    text-decoration: underline;
+}
+
+/* Burger Menu Icon Styles */
+.burger-icon {
+    display: none;
+    font-weight: bold;
+}
+
+.burger {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    cursor: pointer;
+    transition: 300ms;
+    border-radius: 10px;
+}
+
+.burger input[type="checkbox"] {
+    appearance: none;
+    transition: 300ms;
+}
+
+.burger::before,
+.burger::after {
+    content: "";
+    transition: 300ms;
+    transform-origin: center center;
+}
+
+.burger::before {
+    transform: translateY(8px);
+}
+
+.burger::after {
+    transform: translateY(-8px);
+}
+
+.burger .line,
+.burger::before,
+.burger::after {
+    width: 25px;
+    height: 2.1px;
+    display: block;
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    position: absolute;
+}
+
+.burger .line:checked {
+    width: 0;
+    transition-delay: 100ms;
+}
+
+.burger:has(.line:checked)::before {
+    animation: animation1 400ms ease-out 0s 1 both;
+}
+
+.burger:has(.line:checked)::after {
+    animation: animation2 400ms ease-out 0s 1 both;
+}
+
+.burger:hover {
+    background: #0055ff;
+    border-radius: 50%;
+}
+
+.burger:hover .line,
+.burger:hover::before,
+.burger:hover::after {
+    background: #e8e8e8;
+}
+
+.burger:active {
+    scale: 0.95;
+}
+
+@keyframes animation1 {
+    0% {
+        transform: translateY(8px) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    100% {
+        transform: translateY(0px) rotate(45deg);
+    }
+}
+
+@keyframes animation2 {
+    0% {
+        transform: translateY(-8px) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    100% {
+        transform: translateY(0px) rotate(-45deg);
+    }
+}
+
+/* Header Styles */
+.header {
+    position: relative;
+    height: 75vh;
+    /* Set height to 75% of the viewport height */
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    /* Apply backdrop filter */
+    -webkit-backdrop-filter: blur(10px);
+    /* For Safari */
+}
+
+.header-image-container {
+    position: relative;
+    height: 100%;
+    /* Ensure container takes full height of the header */
+}
+
+.header-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Ensure the image covers the container */
+}
+
+.overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    width: 80%;
+    /* Adjust width as needed */
+}
+
+.overlay-text h1 {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.overlay-text p {
+    font-family: 'Rubik', sans-serif;
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+
+/* Sidebar styling */
+/* Sidebar styling */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    /* Hidden off-screen */
+    width: 300px;
+    height: 100%;
+    background-color: #333;
+    padding: 20px;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: right 0.3s ease;
+    /* Smooth slide effect */
+    z-index: 1001;
+    /* Above overlay */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* Push footer to bottom */
+}
+
+/* Sidebar footer styling */
+.sidebar-footer {
+    color: #fff;
+    font-family: 'Rubik', sans-serif;
+    text-align: center;
+    margin-top: auto;
+    /* Push footer to the bottom */
+}
+
+.sidebar-footer p {
+    margin: 0;
+    font-family: 'Rubik', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.sidebar-links {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 40px;
+    margin-left: 30px;
+}
+
+.sidebar-links a:hover,
+.sidebar-links a:focus {
+    color: #ffcc00;
+    /* Highlight color on hover/focus */
+    background-color: rgba(255, 255, 255, 0.1);
+    /* Slight background color change */
+    text-decoration: underline;
+    /* Keep the underline on focus */
+}
+
+.sidebar-links li {
+    margin: 20px 0;
+}
+
+.sidebar-links a {
+    color: #fff;
+    margin-top: 15px;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.sidebar .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-weight: bold;
+    font-size: 50px;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* Overlay styling */
+.sideoverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+
+/* Show sidebar and overlay */
+.sidebar-active .sidebar {
+    right: 0;
+    /* Slide in */
+}
+
+.sidebar-active .sideoverlay {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* Main Content Styles */
+main {
+    flex: 1;
+    /* Allows main to take up remaining space */
+    padding: 20px;
+    background-color: #2e2e2e;
+}
+
+/* Weather Content Styles */
+.weather-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.weather-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.weather-item.left {
+    flex-direction: row;
+}
+
+.weather-item.right {
+    flex-direction: row-reverse;
+}
+
+/* General Image Styles */
+.weather-image {
+    width: 50%;
+    /* Default width */
+    height: auto;
+    border-radius: 10px;
+    margin: 0 10px;
+    transition: transform 0.3s ease;
+    /* Smooth transition on hover */
+}
+
+.weather-image:hover {
+    transform: scale(1.05);
+    /* Zooms the image by 10% */
+}
+
+.weather-description {
+    width: 50%;
+    margin: 20px;
+    color: white;
+    font-family: 'Rubik', sans-serif;
+}
+
+.weather-description p {
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+}
+
+.weather-description h2 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+/* Footer Styles */
+.footer {
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Semi-transparent background */
+    color: white;
+    text-align: center;
+    font-size: 14px;
+    font-family: 'Rubik', sans-serif;
+    padding: 10px;
+    backdrop-filter: blur(5px);
+    /* Apply backdrop filter */
+    -webkit-backdrop-filter: blur(5px);
+    /* For Safari */
+}
+
+.footer a {
+    color: #ff0000;
+}
+
+
+/* Location Button Container Styles */
+.location-button-container {
+    position: relative;
+    overflow: hidden;
+    height: 65vh;
+    display: flex;
+    flex-direction: column;
+    /* Ensure vertical stacking of content */
+    justify-content: center;
+    /* Center content vertically */
+    align-items: center;
+    /* Center content horizontally */
+    text-align: center;
+}
+
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    /* Ensure the background image is behind the content */
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    filter: saturate(2.0) brightness(0.5) contrast(0.8);
+    z-index: 1;
+}
+
+
+.location-info {
+    position: relative;
+    z-index: 2;
+    max-width: 70%;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    /* Ensure the text is visible over the background image */
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    /* Space between text and button */
+}
+
+.buttons {
+    z-index: 2;
+}
+
+/* From Uiverse.io by Wendell47 */
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 30px;
+    border: 0;
+    margin-top: 20px;
+    position: relative;
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+    border-radius: 10rem;
+    transition: all 0.02s;
+    font-weight: bold;
+    cursor: pointer;
+    color: rgb(37, 37, 37);
+    z-index: 2;
+    box-shadow: 0 0px 7px -5px rgba(0, 0, 0, 0.5);
+}
+
+.button:hover {
+    background: rgb(193, 228, 248);
+    color: rgb(33, 0, 85);
+}
+
+.button:active {
+    transform: scale(0.97);
+}
+
+.hoverEffect {
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.hoverEffect div {
+    background: rgb(222, 0, 75);
+    background: linear-gradient(90deg,
+            rgba(222, 0, 75, 1) 0%,
+            rgba(191, 70, 255, 1) 49%,
+            rgba(0, 212, 255, 1) 100%);
+    border-radius: 40rem;
+    width: 10rem;
+    height: 10rem;
+    transition: 0.4s;
+    filter: blur(20px);
+    animation: effect infinite 3s linear;
+    opacity: 0.5;
+}
+
+.button:hover .hoverEffect div {
+    width: 8rem;
+    height: 8rem;
+}
+
+@keyframes effect {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* Google Map container styling */
+.map-container {
+    width: 100%;
+    height: 80vh;
+    /* 80% height for the map */
+    margin-top: 5px;
+    position: relative;
+    display: flex;
+}
+
+.map-container lightning-map {
+    width: 100%;
+    height: 100%;
+    /* Full size map */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+
+    .navbar h1 {
+        font-size: 1.5rem;
+        /* Adjust font size for very small screens */
+    }
+
+    .navbar-logo {
+        width: 30px;
+        /* Adjust size as needed */
+        height: auto;
+        margin-right: 10px;
+    }
+
+    .location-info {
+        max-width: 90%;
+    }
+
+    .navbar-links {
+        display: none;
+    }
+
+    .header-image-container {
+        height: -webkit-fill-available;
+    }
+
+    .overlay-text {
+        width: 100%;
+    }
+
+    .burger-icon {
+        display: block;
+    }
+
+    .weather-item.left {
+        flex-direction: column;
+    }
+
+    .weather-item.right {
+        flex-direction: column;
+    }
+
+    .weather-item {
+        flex-direction: column;
+        /* Stack items vertically */
+        align-items: center;
+        /* Center items horizontally */
+    }
+
+    .weather-image {
+        width: 100%;
+        /* Full width for stacking */
+        margin: 10px 0;
+        /* Margin between stacked items */
+        border-radius: 25px;
+    }
+
+    .map-container {
+        height: auto;
+    }
+
+    .weather-description {
+        width: 100%;
+        /* Full width for stacking */
+        text-align: center;
+        /* Center text */
+        margin: 10px 0;
+        /* Margin between stacked items */
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar h1 {
+        font-size: 1.3rem;
+        /* Adjust font size for very small screens */
+    }
+
+    .footer {
+        font-size: 12px;
+    }
+
+    .weather-image {
+        width: 100%;
+        /* Full width for very small screens */
+        margin: 5px 0;
+        /* Adjust margin for very small screens */
+    }
+
+    .weather-description {
+        font-size: 1rem;
+        /* Adjust font size for very small screens */
+    }
+
+    .overlay-text h1 {
+        font-size: 1.5rem;
+        /* Adjust font size for very small screens */
+    }
+
+    .overlay-text p {
+        font-size: 1rem;
+        /* Adjust font size for very small screens */
+    }
+}

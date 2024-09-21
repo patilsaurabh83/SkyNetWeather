@@ -1,0 +1,128 @@
+<template>
+    <div class="container">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <img src={logoImage} alt="SkynetWeather Logo" class="navbar-logo">
+                <h1>SkynetWeather</h1>
+            </div>
+            <div class="burger-icon">
+                <label class="burger" for="burger" onclick={handleHamburgerClick}>
+                    <input class="line" type="checkbox" id="burger" />
+                </label>
+            </div>
+
+            <ul class="navbar-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact" onclick={contactUs}>Contact Us</a></li>
+            </ul>
+        </nav>
+
+
+        <!-- Sidebar and Overlay -->
+        <div class="sideoverlay" onclick={closeSidebar}></div>
+        <div class="sidebar">
+            <div class="close-btn" onclick={closeSidebar}>&times;</div>
+            <ul class="sidebar-links">
+                <li><a href="#home" onclick={closeSidebar}>Home</a></li>
+                <li><a href="#about" onclick={closeSidebar}>About</a></li>
+                <li><a href="#services" onclick={closeSidebar}>Services</a></li>
+                <li><a href="#contact" onclick={contactUs}>Contact Us</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <p>&copy; 2024 SkynetWeather. All rights reserved.</p>
+            </div>
+        </div>
+
+
+        <!-- Header -->
+        <header class="header" id="home">
+            <div class="header-image-container">
+                <img src={headerImage} alt="Weather Header Image" class="header-image">
+                <div class="overlay-text">
+                    <h1>SkynetWeather</h1>
+                    <p>Stay One Step Ahead with SkynetWeather<br>Accurate, Real-Time Forecasts<br>Wherever You Are.</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main id="about">
+            <div class="weather-content">
+                <!-- Left: Hot Season Weather -->
+                <div class="weather-item left">
+                    <img src={rightImage} alt="Hot Season Weather" class="weather-image">
+                    <div class="weather-description">
+                        <h2>Hot Season Forecast</h2>
+                        <p>The sun is blazing, and temperatures are soaring! 🌞 Check the details of high temperatures
+                            in your area with <strong>SkynetWeather</strong>. Be sure to stay hydrated and protect yourself with
+                            sunscreen and light clothing. Expect highs above <strong>35°C</strong> during peak hours.
+                            Stay safe and cool!</p>
+                    </div>
+                </div>
+
+                <!-- Right: Rainy Season Weather -->
+                <div class="weather-item right">
+                    <img src={leftImage} alt="Rainy Season Weather" class="weather-image">
+                    <div class="weather-description">
+                        <h2>Rainy Season Forecast</h2>
+                        <p>Expect heavy rainfall throughout the day with possible thunderstorms in the evening! ⛈️ Check
+                            <strong> SkynetWeather</strong> for detailed updates on rainfall in your area. Keep an umbrella handy and
+                            prepare for sudden downpours. Temperatures will remain cooler, around <strong>20°C -
+                                25°C</strong>. Stay safe and dry!</p>
+                    </div>
+                </div>
+
+                <!-- New Section: Cold Season Weather -->
+                <div class="weather-item cold">
+                    <img src={rightImage1} alt="Cold Season Weather" class="weather-image">
+                    <div class="weather-description">
+                        <h2>Cold Season Forecast</h2>
+                        <p>Winter is coming, and temperatures are dropping significantly! ❄️ Check <strong>SkynetWeather</strong> for
+                            updates on conditions in your area. Expect chilly winds and possible snow in some regions.
+                            Stay warm with heavy clothing and be cautious of icy roads. Temperatures will hover around
+                            <strong>0°C to -5°C</strong>. Stay safe and cozy!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Centered Div with Button and Content -->
+        <div class="location-button-container" id="services">
+            <!-- Background Image -->
+            <img src={divImage} alt="Background" class="background-image">
+            <div class="overlay"></div>
+
+            <p class="location-info">
+                Get detailed information about your location or another location by clicking the button below.
+                SkynetWeather will assist you with accurate forecasts and weather updates based on the location you
+                provide.
+            </p>
+
+            <button class="button" onclick={handleButtonClick}>
+                Get Weather Details
+                <div class="hoverEffect">
+                    <div></div>
+                </div>
+            </button>
+        </div>
+
+        <!-- Google Maps Section -->
+        <div class="map-container">
+            <lightning-map map-markers={mapMarkers} zoom-level="12" center={mapCenter} list-view="visible">
+            </lightning-map>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2024 SkynetWeather. All rights reserved. | <a
+                    href="mailto:patilsaurabh9978@gmail.com?subject=Issue%20Report%20for%20SkynetWeather&body=Please%20describe%20the%20issue%20you're%20experiencing:"
+                    class="footer-link">Report an issue</a></p>
+        </footer>
+
+    </div>
+</template>
