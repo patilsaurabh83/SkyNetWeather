@@ -84,8 +84,8 @@ export default class WeatherComp extends LightningElement {
                 navigator.vibrate(200); // Vibrate for 200 milliseconds
             }
             
-            // Optionally, show a toast message
-            this.showToast('Weather Alert!', 'Oops! Can’t read the clouds without a location. Toss us a place to forecast!', 'info');
+             // Optionally, show a toast message
+            this.showToast('Weather Alert!', 'Uh-oh! Your location is so invisible, even GPS is confused! Type or share it, and we’ll forecast!', 'info');
 
         }
     }
@@ -122,7 +122,7 @@ export default class WeatherComp extends LightningElement {
                     // Handle geolocation errors based on error codes
                     switch (error.code) {
                         case error.PERMISSION_DENIED:
-                            this.showToast('Location Retrieval Failed', 'User denied the request for Geolocation.', 'error');
+                            this.showToast('Location Retrieval Failed', 'You denied the request for Geolocation.', 'error');
                             break;
                         case error.POSITION_UNAVAILABLE:
                             this.showToast('Location Retrieval Failed', 'Location information is unavailable.', 'error');
