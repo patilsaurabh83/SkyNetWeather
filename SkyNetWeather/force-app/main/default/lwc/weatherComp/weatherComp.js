@@ -25,6 +25,7 @@ export default class WeatherComp extends LightningElement {
     @track showOverlay = false;  // Controls overlay visibility
     @track showLoader = true;
     @track weatherData = {};     // Holds fetched weather data
+    @track snackbarMessage = 'Fetching your location...'
 
     background = BACKGROUND_IMAGE;
 
@@ -88,11 +89,12 @@ export default class WeatherComp extends LightningElement {
     // Handle the location button click
     handleLocationClick() {
         if (navigator.geolocation) {
+            this.showSnackbar();
             navigator.geolocation.getCurrentPosition(
                 position => {
+                    this.showOverlay = true;
                     const lat = position.coords.latitude;
                     const lon = position.coords.longitude;
-                    this.showOverlay = true;
                     this.fetchWeatherDataByCoordinates(lat, lon);
                 },
                 error => {
@@ -105,6 +107,17 @@ export default class WeatherComp extends LightningElement {
         } else {
             alert('Geolocation is not supported by this browser.');
         }
+    }
+
+    // Function to show the snackbar
+    showSnackbar() {
+        const snackbar = this.template.querySelector('.snackbar');
+        snackbar.classList.add('show'); // Add 'show' class to make it visible
+
+        // Hide the snackbar after 2000ms
+        setTimeout(() => {
+            snackbar.classList.remove('show');
+        }, 1000);
     }
 
     // Fetch weather data from API by location name

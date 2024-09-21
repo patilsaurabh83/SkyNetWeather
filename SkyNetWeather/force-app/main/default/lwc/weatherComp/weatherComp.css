@@ -151,6 +151,32 @@ button:active {
     }
 }
 
+.snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    border-radius: 2px;
+    padding: 16px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: fixed;
+    z-index: 3;
+    left: 50%; /* Aligns the snackbar horizontally to the center */
+    transform: translateX(-50%); /* Centers it based on its own width */
+    top: -100px; /* Hidden initially from the top */
+    font-size: 17px;
+    transition: top 0.5s ease-in-out, visibility 0.5s ease-in-out;
+}
+
+.snackbar.show {
+    visibility: visible;
+    top: 0;
+}
+
+
 
 /* Pre Loder for the weather overlay */
 
@@ -494,6 +520,11 @@ button:active {
         width: 40px;
         height: 40px;
         right: 10px;
+    }
+
+    .snackbar {
+        padding: 12px; /* Reduces padding on mobile */
+        font-size: 14px; /* Makes the text size smaller */
     }
 
     .loader {
