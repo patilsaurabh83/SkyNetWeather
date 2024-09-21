@@ -59,6 +59,11 @@ export default class WeatherComp extends LightningElement {
     @track mapMarkers = [];
     @track mapCenter = { lat: 0, lng: 0 };
 
+    
+    connectedCallback(){
+        this.logWithStyle('Designed and developed by Saurabh Patil');
+    }
+
     handleInputChange(event) {
         this.searchQuery = event.target.value;
     }
@@ -83,6 +88,20 @@ export default class WeatherComp extends LightningElement {
             this.showToast('Weather Alert!', 'Oops! Can’t read the clouds without a location. Toss us a place to forecast!', 'info');
 
         }
+    }
+
+
+    logWithStyle(message) {
+        console.clear(); // Clear the console
+        const currentYear = new Date().getFullYear();
+        const style = `
+            background: linear-gradient(to right, rgba(255, 182, 193, 1) 0%, rgba(255, 105, 180, 1) 100%);
+            padding: 30px;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        `;
+        console.log(`%c${message} © ${currentYear}`, style);
     }
     
 
@@ -315,6 +334,8 @@ export default class WeatherComp extends LightningElement {
         if (visibility < 5000) { // Adjusted to meters, assuming lower visibility indicates rain
             rainLikelihood += 10; // Reduced visibility may indicate rain or fog
         }
+
+        this.logWithStyle('Designed and developed by Saurabh Patil');
 
         // Final adjustment to ensure the value is between 0% and 100%
         return Math.min(Math.max(rainLikelihood, 0), 100); // Cap between 0 and 100
