@@ -628,4 +628,9 @@ button:active {
     .weather-map {
         margin-top: 0;
     }
+
+    .searchInput{
+        width: 80%;
+        font-weight: 500;
+    }
 }
