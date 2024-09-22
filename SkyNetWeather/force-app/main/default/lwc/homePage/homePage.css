@@ -1,4 +1,10 @@
 /* General Styles */
+
+html, body {
+    scroll-behavior: smooth !important;
+}
+
+
 .container {
     display: flex;
     flex-direction: column;
@@ -219,6 +225,81 @@
     font-size: 1.2rem;
 }
 
+/* New Styles for the Button */
+.header-button-container {
+    position: absolute;
+    bottom: 20px;
+    /* Adjust the distance from the bottom */
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.cta {
+    position: relative;
+    margin: auto;
+    padding: 12px 18px;
+    transition: all 0.2s ease;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    background: none;
+    cursor: pointer;
+}
+
+.cta:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    border-radius: 50px;
+    background: #090267;
+    width: 45px;
+    height: 45px;
+    transition: all 0.3s ease;
+}
+
+.cta span {
+    position: relative;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #ffffff;
+}
+
+.cta svg {
+    position: relative;
+    top: 0;
+    margin-left: 10px;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke: #1c3651;
+    stroke-width: 2;
+    transform: translateX(-5px);
+    transition: all 0.3s ease;
+}
+
+.cta:hover svg {
+    stroke: white;
+    /* Change stroke color on hover */
+}
+
+.cta:hover:before {
+    width: 100%;
+    background: #0f029f;
+}
+
+.cta:hover svg {
+    transform: translateX(0);
+}
+
+.cta:active {
+    transform: scale(0.95);
+}
+
+
 
 /* Sidebar styling */
 /* Sidebar styling */
@@ -296,6 +377,11 @@
     font-size: 50px;
     color: #fff;
     cursor: pointer;
+}
+
+.sidebar .close-btn:hover,
+.sidebar .close-btn:focus{
+    color: #ffcc00;
 }
 
 /* Overlay styling */
@@ -457,6 +543,7 @@ main {
     color: white;
     /* Ensure the text is visible over the background image */
     font-size: 1.2rem;
+    font-weight: 500;
     margin-bottom: 20px;
     /* Space between text and button */
 }
@@ -465,7 +552,7 @@ main {
     z-index: 2;
 }
 
-/* From Uiverse.io by Wendell47 */
+
 .button {
     display: inline-flex;
     align-items: center;
@@ -561,6 +648,12 @@ main {
         /* Adjust font size for very small screens */
     }
 
+    .navbar{
+        top: 0;
+        z-index: 1000;
+        position: sticky;
+    }
+
     .navbar-logo {
         width: 30px;
         /* Adjust size as needed */
@@ -623,6 +716,21 @@ main {
         margin: 10px 0;
         /* Margin between stacked items */
     }
+
+    .cta {
+        padding: 10px 14px;
+    }
+    .cta:before {
+        width: 40px;
+        height: 40px;
+    }
+    .cta span {
+        font-size: 16.8px;
+    }
+    .cta svg {
+        margin-left: 8px;
+        stroke-width: 1.8;
+    }
 }
 
 @media (max-width: 480px) {
@@ -639,7 +747,7 @@ main {
         width: 100%;
         /* Full width for very small screens */
         margin: 5px 0;
-        /* Adjust margin for very small screens */
+        /* Adjusted margin for very small screens */
     }
 
     .weather-description {

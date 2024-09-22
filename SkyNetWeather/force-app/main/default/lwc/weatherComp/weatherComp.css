@@ -94,7 +94,6 @@ button:active {
     height: 24px;
 }
 
-/* From Uiverse.io by JaydipPrajapati1910 */
 .loader {
     width: 44.8px;
     height: 44.8px;
@@ -159,7 +158,7 @@ button:active {
     text-align: center;
     font-family: 'Inter', sans-serif;
     border-radius: 2px;
-    padding: 16px;
+    padding: 15px;
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;
     position: fixed;
@@ -167,7 +166,7 @@ button:active {
     left: 50%; /* Aligns the snackbar horizontally to the center */
     transform: translateX(-50%); /* Centers it based on its own width */
     top: -100px; /* Hidden initially from the top */
-    font-size: 17px;
+    font-size: 16px;
     transition: top 0.5s ease-in-out, visibility 0.5s ease-in-out;
 }
 

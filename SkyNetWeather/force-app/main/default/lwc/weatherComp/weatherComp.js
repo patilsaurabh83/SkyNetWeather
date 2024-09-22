@@ -59,11 +59,6 @@ export default class WeatherComp extends LightningElement {
     @track mapMarkers = [];
     @track mapCenter = { lat: 0, lng: 0 };
 
-    
-    connectedCallback(){
-        this.logWithStyle('Designed and developed by Saurabh Patil');
-    }
-
     handleInputChange(event) {
         this.searchQuery = event.target.value;
     }
@@ -72,24 +67,11 @@ export default class WeatherComp extends LightningElement {
         if (event.key === 'Enter' && !event.shiftKey) {
             this.handleSearchClick();
         }
-    }    
-
-    handleSearchClick() {
-        if (this.searchQuery) {
-            this.fetchWeatherData(this.searchQuery);
-            this.searchQuery='';
-        } else {
-            // Trigger vibration on mobile
-            if (navigator.vibrate) {
-                navigator.vibrate(200); // Vibrate for 200 milliseconds
-            }
-            
-             // Optionally, show a toast message
-            this.showToast('Weather Alert!', 'Uh-oh! Your location is so invisible, even GPS is confused! Type or share it, and we’ll forecast!', 'info');
-
-        }
     }
 
+    connectedCallback(){
+        this.logWithStyle('Designed and developed by Saurabh Patil');
+    }
 
     logWithStyle(message) {
         console.clear(); // Clear the console
@@ -103,22 +85,47 @@ export default class WeatherComp extends LightningElement {
         `;
         console.log(`%c${message} © ${currentYear}`, style);
     }
-    
+
+    handleSearchClick() {
+        if (this.searchQuery) {
+            this.fetchWeatherData(this.searchQuery);
+        } else {
+            // Trigger vibration on mobile
+            if (navigator.vibrate) {
+                navigator.vibrate(200); // Vibrate for 200 milliseconds
+            }
+
+            // Optionally, show a toast message
+            this.showToast('Weather Alert!', 'Uh-oh! Your location is so invisible, even GPS is confused! Type or share it, and we’ll forecast!', 'info');
+
+
+
+        }
+    }
+
+    clearInput() {
+        const inputField = this.template.querySelector('.searchInput');
+        if (inputField) {
+            inputField.value = '';
+        }
+    }
+
 
     // Handle the location button click
     handleLocationClick() {
+        this.showSnackbar();  // Display snackbar notification
         if (navigator.geolocation) {
-            this.showSnackbar();  // Display snackbar notification
-
             // Request current position with high accuracy
             navigator.geolocation.getCurrentPosition(
                 position => {
+                    this.hideSnackBar();
                     this.showOverlay = true;
                     const lat = position.coords.latitude;
                     const lon = position.coords.longitude;
                     this.fetchWeatherDataByCoordinates(lat, lon);  // Fetch weather data using coordinates
                 },
                 error => {
+                    this.hideSnackBar();
                     // Handle geolocation errors based on error codes
                     switch (error.code) {
                         case error.PERMISSION_DENIED:
@@ -141,6 +148,7 @@ export default class WeatherComp extends LightningElement {
                 }
             );
         } else {
+            this.hideSnackBar();
             // Fallback when geolocation is not supported
             this.showToast('Geolocation Not Supported', 'This browser does not support geolocation services.', 'warning');
         }
@@ -151,11 +159,11 @@ export default class WeatherComp extends LightningElement {
     showSnackbar() {
         const snackbar = this.template.querySelector('.snackbar');
         snackbar.classList.add('show'); // Add 'show' class to make it visible
+    }
 
-        // Hide the snackbar after 2000ms
-        setTimeout(() => {
-            snackbar.classList.remove('show');
-        }, 2000);
+    hideSnackBar(){
+        const snackbar = this.template.querySelector('.snackbar');
+        snackbar.classList.remove('show'); //hide the snackbar
     }
 
     // Fetch weather data from API by location name
@@ -252,6 +260,8 @@ export default class WeatherComp extends LightningElement {
         const dewPoint = this.calculateDewPoint(this.temperature, this.humidity);
         // Generate predictions for the next 5 hours
         this.rainForecast = this.calculateRainForecast(this.temperature, this.humidity, this.pressure, data.clouds.all, this.windSpeed, dewPoint, data.sys.visibility);
+        //clear the input field
+        this.clearInput();
     }
 
     // Generate rain predictions for the next 5 hours

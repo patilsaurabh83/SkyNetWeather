@@ -19,7 +19,8 @@ export default class Homepage extends LightningElement {
     mapLoaded = false;
 
     connectedCallback() {
-        this.getLocation();       
+        this.getLocation(); 
+        this.logWithStyle('Designed and developed by Saurabh Patil'); 
     }
 
     getLocation() {
@@ -54,14 +55,15 @@ export default class Homepage extends LightningElement {
         fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`)
             .then(response => response.json())
             .then(data => {
-                const locationName = data.city || data.locality || 'Your Location';
+                const locationName = `${data.principalSubdivision}, ${data.city}, ${data.countryName}`;                
                 this.mapMarkers = [
                     {
                         location: {
                             Latitude: latitude,
                             Longitude: longitude
                         },
-                        title: 'Your Current Location'
+                        title: 'Your Current Location',
+                        description : `${locationName}`
                     }
                 ];
                 this.mapLoaded = true;
@@ -74,7 +76,8 @@ export default class Homepage extends LightningElement {
                             Latitude: latitude,
                             Longitude: longitude
                         },
-                        title: 'Your Current Location'
+                        title: 'error Occured',
+                        description : `${error.message}`
                     }
                 ];
                 this.mapLoaded = true;
@@ -154,6 +157,19 @@ export default class Homepage extends LightningElement {
         }
         requestAnimationFrame(slideOut);  // Start the animation
     }
+
+    scrollToServices() {
+        const servicesElement = this.template.querySelector('.location-button-container'); // Use class name
+        if (servicesElement) {
+            servicesElement.scrollIntoView({
+                behavior: 'smooth'
+            });
+        } else {
+            console.error('Element not found');
+        }
+    }
+    
+    
 
 
     handleButtonClick() {
