@@ -112,55 +112,55 @@ export default class WeatherComp extends LightningElement {
 
 
     // Handle the location button click
-    handleLocationClick() {
+    async handleLocationClick() {
         this.showSnackbar();  // Display snackbar notification
-
         if (navigator.geolocation) {
-            // Request current position with high accuracy
-            navigator.geolocation.getCurrentPosition(
-                position => {
+            try {
+                // Check the permission status
+                const permissionStatus = await navigator.permissions.query({ name: 'geolocation' });
+
+                if (permissionStatus.state === 'denied') {
                     this.hideSnackBar();
-                    this.showOverlay = true;
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
-                    this.fetchWeatherDataByCoordinates(lat, lon);  // Fetch weather data using coordinates
-                },
-                error => {
-                    this.hideSnackBar();
-                    // Handle geolocation errors based on error codes
-                    switch (error.code) {
-                        case error.PERMISSION_DENIED:
-                            if (navigator.permissions) {
-                                // Check if the browser has blocked the location request
-                                navigator.permissions.query({ name: 'geolocation' }).then(permissionStatus => {
-                                    if (permissionStatus.state === 'denied') {
-                                        this.showToast('Location Access Blocked by Browser', 'Click the icon on the left of the URL or go to settings to enable it.', 'error');
-                                    } else {
-                                        this.showToast('Location Retrieval Failed', 'You denied the request for Geolocation.', 'error');
-                                    }
-                                }).catch(() => {
-                                    this.showToast('Location Retrieval Failed', 'You denied the request for Geolocation.', 'error');
-                                });
-                            } else {
-                                this.showToast('Location Retrieval Failed', 'You denied the request for Geolocation.', 'error');
-                            }
-                            break;
-                        case error.POSITION_UNAVAILABLE:
-                            this.showToast('Location Retrieval Failed', 'Location information is unavailable.', 'error');
-                            break;
-                        case error.TIMEOUT:
-                            this.showToast('Location Retrieval Failed', 'The request to get user location timed out.', 'error');
-                            break;
-                        default:
-                            this.showToast('Location Retrieval Failed', `An unknown error occurred: ${error.message}`, 'error');
-                    }
-                },
-                {
-                    enableHighAccuracy: true,  // Prioritize high-accuracy methods like GPS
-                    timeout: 10000,            // Wait for 10 seconds before timeout
-                    maximumAge: 0              // Prevent caching of position for fresh location data
+                    this.showToast('Location Retrieval Failed', 'Location access has been denied in your browser settings.', 'error');
+                    return;
                 }
-            );
+
+                // Request current position with high accuracy
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        this.hideSnackBar();
+                        this.showOverlay = true;
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        this.fetchWeatherDataByCoordinates(lat, lon);  // Fetch weather data using coordinates
+                    },
+                    error => {
+                        this.hideSnackBar();
+                        // Handle geolocation errors based on error codes
+                        switch (error.code) {
+                            case error.PERMISSION_DENIED:
+                                this.showToast('Location Retrieval Failed', 'You denied the request for Geolocation.', 'error');
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                this.showToast('Location Retrieval Failed', 'Location information is unavailable.', 'error');
+                                break;
+                            case error.TIMEOUT:
+                                this.showToast('Location Retrieval Failed', 'The request to get user location timed out.', 'error');
+                                break;
+                            default:
+                                this.showToast('Location Retrieval Failed', `An unknown error occurred: ${error.message}`, 'error');
+                        }
+                    },
+                    {
+                        enableHighAccuracy: true,  // Prioritize high-accuracy methods like GPS
+                        timeout: 10000,  // Wait for 10 seconds before timeout
+                        maximumAge: 0    // Prevent caching of position for fresh location data
+                    }
+                );
+            } catch (error) {
+                this.hideSnackBar();
+                this.showToast('Permission Check Failed', `An error occurred while checking permissions: ${error.message}`, 'error');
+            }
         } else {
             this.hideSnackBar();
             // Fallback when geolocation is not supported
