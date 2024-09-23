@@ -114,6 +114,7 @@ export default class WeatherComp extends LightningElement {
     // Handle the location button click
     handleLocationClick() {
         this.showSnackbar();  // Display snackbar notification
+
         if (navigator.geolocation) {
             // Request current position with high accuracy
             navigator.geolocation.getCurrentPosition(
@@ -129,7 +130,20 @@ export default class WeatherComp extends LightningElement {
                     // Handle geolocation errors based on error codes
                     switch (error.code) {
                         case error.PERMISSION_DENIED:
-                            this.showToast('Location Retrieval Failed', 'You denied the request for Geolocation.', 'error');
+                            if (navigator.permissions) {
+                                // Check if the browser has blocked the location request
+                                navigator.permissions.query({ name: 'geolocation' }).then(permissionStatus => {
+                                    if (permissionStatus.state === 'denied') {
+                                        this.showToast('Location Access Blocked by Browser', 'Click the icon on the left of the URL or go to settings to enable it.', 'error');
+                                    } else {
+                                        this.showToast('Location Retrieval Failed', 'You denied the request for Geolocation.', 'error');
+                                    }
+                                }).catch(() => {
+                                    this.showToast('Location Retrieval Failed', 'You denied the request for Geolocation.', 'error');
+                                });
+                            } else {
+                                this.showToast('Location Retrieval Failed', 'You denied the request for Geolocation.', 'error');
+                            }
                             break;
                         case error.POSITION_UNAVAILABLE:
                             this.showToast('Location Retrieval Failed', 'Location information is unavailable.', 'error');
@@ -143,8 +157,8 @@ export default class WeatherComp extends LightningElement {
                 },
                 {
                     enableHighAccuracy: true,  // Prioritize high-accuracy methods like GPS
-                    timeout: 10000,  // Wait for 10 seconds before timeout
-                    maximumAge: 0    // Prevent caching of position for fresh location data
+                    timeout: 10000,            // Wait for 10 seconds before timeout
+                    maximumAge: 0              // Prevent caching of position for fresh location data
                 }
             );
         } else {
@@ -153,7 +167,6 @@ export default class WeatherComp extends LightningElement {
             this.showToast('Geolocation Not Supported', 'This browser does not support geolocation services.', 'warning');
         }
     }
-
 
     // Function to show the snackbar
     showSnackbar() {
