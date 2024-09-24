@@ -288,16 +288,22 @@ export default class WeatherComp extends LightningElement {
             const likelihood = Math.min(Math.max(baseRainLikelihood + variation, 0), 100); // Cap between 0 and 100
 
             const predictionTime = new Date(Date.now() + hour * 3600000);
+
+            // Set the minutes and seconds to 0 to display the hour only (e.g., 12:00)
+            predictionTime.setMinutes(0);
+            predictionTime.setSeconds(0);
+            predictionTime.setMilliseconds(0);
+
             const options = {
                 hour: '2-digit',
                 minute: '2-digit',
                 hour12: true, // Set to true for 12-hour format or false for 24-hour format
             };
 
-            const formattedTime = predictionTime.toLocaleTimeString([], options).replace(':00', ''); // Remove ":00" to show only hours
+            const formattedTime = predictionTime.toLocaleTimeString([], options);
 
             predictions.push({
-                time: formattedTime, // Use formatted time
+                time: formattedTime, // Always shows full hour (e.g., 12:00 PM)
                 probability: likelihood.toFixed(0) // Probability in percent
             });
         }
@@ -305,64 +311,66 @@ export default class WeatherComp extends LightningElement {
         return predictions;
     }
 
-    // Calculate base rain likelihood based on current conditions
-    calculateBaseRainLikelihood(temperature, humidity, pressure, cloudCover, windSpeed, dewPoint, visibility) {
+
+    // Function to calculate the likelihood of rain based on multiple weather factors
+    calculateBaseRainLikelihood(temperature, humidity, pressure, windSpeed, cloudCover, dewPoint, visibility) {
         let rainLikelihood = 0;
 
-        // Humidity factor
-        if (humidity > 80) {
-            rainLikelihood += 40; // Very high humidity strongly increases the chance of rain
-        } else if (humidity > 60) {
-            rainLikelihood += 20; // Moderate humidity increases the chance, but less
+        // Humidity Factor: High humidity significantly increases the likelihood of rain
+        if (humidity >= 90) {
+            rainLikelihood += 40; // Very high humidity strongly suggests rain
+        } else if (humidity >= 70) {
+            rainLikelihood += 25; // High humidity increases chances
+        } else if (humidity >= 50) {
+            rainLikelihood += 10; // Moderate humidity, low influence
         }
 
-        // Temperature factor
-        if (temperature < 15) {
-            rainLikelihood += 20; // Cooler temperatures may indicate rain
-        } else if (temperature > 30) {
-            rainLikelihood -= 15; // Higher temperatures reduce the chance of rain
+        // Temperature Factor: Colder air tends to condense water vapor, increasing the chance of rain
+        if (temperature < 10) {
+            rainLikelihood += 20; // Cold temperatures often indicate rain
+        } else if (temperature > 25) {
+            rainLikelihood -= 15; // Hot temperatures generally reduce rain chances
         }
 
-        // Pressure factor
+        // Pressure Factor: Low pressure usually accompanies storms and precipitation
         if (pressure < 1000) {
-            rainLikelihood += 25; // Very low pressure strongly increases the chance of rain
-        } else if (pressure < 1013) {
-            rainLikelihood += 15; // Low pressure increases the chance
+            rainLikelihood += 30; // Strong low pressure indicates high chances of rain
+        } else if (pressure < 1010) {
+            rainLikelihood += 15; // Low pressure, moderate effect
         } else if (pressure > 1020) {
-            rainLikelihood -= 15; // High pressure reduces the chance of rain
+            rainLikelihood -= 20; // High pressure generally reduces rain likelihood
         }
 
-        // Cloud cover factor
-        if (cloudCover > 70) {
-            rainLikelihood += 30; // High cloud cover strongly indicates rain
-        } else if (cloudCover > 50) {
-            rainLikelihood += 15; // Moderate cloud cover may indicate some rain
-        } else if (cloudCover < 30) {
-            rainLikelihood -= 10; // Low cloud cover decreases the chance of rain
-        }
-
-        // Wind speed factor
-        if (windSpeed > 15) {
-            rainLikelihood += 15; // High wind speed may indicate stormy conditions
+        // Wind Speed Factor: High wind speeds may bring stormy weather, but calm winds often reduce rain chances
+        if (windSpeed > 20) {
+            rainLikelihood += 15; // Strong winds indicate potential storms
         } else if (windSpeed < 5) {
-            rainLikelihood -= 10; // Calm conditions decrease the likelihood of rain
+            rainLikelihood -= 10; // Calm conditions reduce rain likelihood
         }
 
-        // Dew point factor
+        // Cloud Cover Factor: Dense cloud cover often leads to rain
+        if (cloudCover > 80) {
+            rainLikelihood += 30; // Thick cloud cover signals rain
+        } else if (cloudCover > 50) {
+            rainLikelihood += 15; // Moderate cloud cover, moderate influence
+        } else if (cloudCover < 20) {
+            rainLikelihood -= 10; // Clear skies reduce chances of rain
+        }
+
+        // Dew Point Factor: High dew point near the air temperature means saturated air, increasing rain probability
         if (dewPoint >= temperature) {
-            rainLikelihood += 20; // High dew point (near temperature) indicates saturated air
+            rainLikelihood += 20; // Saturated air, highly likely to rain
         }
 
-        // Visibility factor
-        if (visibility < 5000) { // Adjusted to meters, assuming lower visibility indicates rain
-            rainLikelihood += 10; // Reduced visibility may indicate rain or fog
+        // Visibility Factor: Low visibility could indicate rain or fog
+        if (visibility < 2000) { // Less than 2 km
+            rainLikelihood += 10; // Low visibility may indicate precipitation
         }
 
-        this.logWithStyle('Designed and developed by Saurabh Patil');
-
-        // Final adjustment to ensure the value is between 0% and 100%
-        return Math.min(Math.max(rainLikelihood, 0), 100); // Cap between 0 and 100
+        // Final adjustment to cap rain likelihood between 0% and 100%
+        return Math.min(Math.max(rainLikelihood, 0), 100);
     }
+
     // Close the weather overlay
     handleCloseOverlay() {
         this.showOverlay = false;
