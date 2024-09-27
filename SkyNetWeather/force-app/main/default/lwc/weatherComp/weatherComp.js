@@ -108,6 +108,7 @@ export default class WeatherComp extends LightningElement {
         if (inputField) {
             inputField.value = '';
         }
+        this.searchQuery ='';  //once user will seach then the input value will be null
     }
 
 
